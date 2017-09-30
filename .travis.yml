@@ -1,6 +1,8 @@
 language: python
-os:
-  - linux
+
+python:
+  - 3.6
+
 sudo: required
 dist: trusty
 addons:
@@ -24,17 +26,21 @@ addons:
         - libudev-dev
         - mesa-utils
         - libgl1-mesa-glx
+
 before_install:
   - sudo add-apt-repository -y ppa:oibaf/graphics-drivers
   - sudo apt-get update -qq -y
   - export DEBIAN_FRONTEND=noninteractive
   - sudo apt-get -yq --force-yes install libgl1-mesa-dev libgl1-mesa-glx mesa-common-dev libglapi-mesa libgbm1 libgl1-mesa-dri libxatracker-dev xvfb
 
+install:
+  - pip install pytest sphinx pytest-cov Pillow wheel
+
 before_script:
   - export DISPLAY=:99
   - export LIBGL_ALWAYS_SOFTWARE=1
   - xpra --xvfb="Xorg +extension GLX +extension RANDR +extension RENDER -config `pwd`/test/dummy.xorg.conf -logfile ${HOME}/.xpra/xorg.log"  start :99
-  - sleep 3 
+  - while ! ps aux | grep -q '[0]:00 Xvfb :99 -screen 0 1024x768x16';do echo "Waiting for Xvfb..."; sleep 1; done
   - LIBGL_ALWAYS_SOFTWARE=1 glxinfo
   - glxinfo
   - cat ${HOME}/.xpra/xorg.log
