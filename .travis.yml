@@ -2,10 +2,12 @@ language: python
 
 python:
   - 2.7
+  - 3.4
+  - 3.5
   - 3.6
 
 install:
-  - pip install py.test sphinx pytest-cov Pillow wheel
+  - pip install pytest sphinx pytest-cov Pillow wheel
 
 script:
-  - py.test tests/unit
+  - pytest tests/unit
