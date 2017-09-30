@@ -1,13 +1,17 @@
 language: python
 
+sudo: required
+dist: trusty
+
 python:
   - 2.7
-  - 3.4
   - 3.5
-  - 3.6
+
+services:
+  - docker
 
 install:
-  - pip install pytest sphinx pytest-cov Pillow wheel
+  - docker build -f Dockerfile -t mottosso/pyglet .
 
 script:
-  - pytest tests/unit
+  - docker run --rm -v $(pwd):/workspace mottosso/pyglet
