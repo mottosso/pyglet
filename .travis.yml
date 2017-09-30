@@ -1,7 +1,7 @@
 language: python
 
 python:
-  - 3.6
+  - 3.5
 
 sudo: required
 dist: trusty
@@ -40,7 +40,7 @@ before_script:
   - export DISPLAY=:99
   - export LIBGL_ALWAYS_SOFTWARE=1
   - xpra --xvfb="Xorg +extension GLX +extension RANDR +extension RENDER -config `pwd`/test/dummy.xorg.conf -logfile ${HOME}/.xpra/xorg.log"  start :99
-  - while ! ps aux | grep -q '[0]:00 Xvfb :99 -screen 0 1024x768x16';do echo "Waiting for Xvfb..."; sleep 1; done
+  - sleep 10
   - LIBGL_ALWAYS_SOFTWARE=1 glxinfo
   - glxinfo
   - cat ${HOME}/.xpra/xorg.log
