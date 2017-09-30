@@ -4,37 +4,11 @@ jdk:
 - oraclejdk8
 
 before_install:
-- chmod +x gradlew
 - export DISPLAY=:99
 - export LIBGL_ALWAYS_SOFTWARE=1
-- export ANDROID_JACK_EXTRA_ARGS="--verbose debug --sanity-checks on -D sched.runner=single-threaded"
-# cloud-init breaks updates sometimes and we don't need it anyways
-- sudo apt-get remove cloud-init -qq --force-yes
-- sudo apt-get update -qq --force-yes
-# testing setup
 - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch gawk maven
-# prepare software rendering
 - sudo apt-get install -qq --force-yes mesa-utils libgl1-mesa-swx11 libgl1-mesa-swx11-dev xvfb  
 - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render
-## java, android, etc.
-- sudo apt-get install -qq openjdk-7-jdk
-- wget http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-- tar -zxf android-sdk_r24.4.1-linux.tgz
-- wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/java-universal-tween-engine/tween-engine-api-6.3.3.zip
-- unzip tween-engine-api-6.3.3.zip
-- mvn install:install-file -Dfile=tween-engine-api.jar -DgroupId=aurelienribon -DartifactId=tweenengine -Dversion=6.3.3 -Dpackaging=jar 
-- export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
-- export _JAVA_OPTIONS="-Xms128m -Xmx512m"
-- export ANDROID_HOME=`pwd`/android-sdk-linux
-- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-- echo "sdk.dir=${ANDROID_HOME}" > local.properties
-- echo "retrolambda.jdk=${JAVA_HOME}" >> local.properties
-- echo "retrolambda.oldJdk=${JAVA7_HOME}" >> local.properties
-- echo yes | android update sdk --filter platform-tools --no-ui --force #> /dev/null
-- echo yes | android update sdk --all --filter build-tools-24.0.0 --no-ui --force #> /dev/null
-- echo yes | android update sdk --filter android-24 --no-ui --force #> /dev/null
-- echo yes | android update sdk --filter extra-android-support --no-ui --force #> /dev/null
-- echo yes | android update sdk --filter extra-android-m2repository --no-ui --force #> /dev/null
 - glxinfo
 - dmesg
 
