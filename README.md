@@ -1,4 +1,4 @@
-## pyglet
+### pyglet
 
 Fork of [pyglet](http://www.pyglet.org/), with the following goals.
 
@@ -8,8 +8,8 @@ Fork of [pyglet](http://www.pyglet.org/), with the following goals.
 - PEP08
 - Explicit imports
 - PyLint and PyFlake compatible
-- Test on relevant platforms
-- Test on relevant versions of Python
+- [x] Test on relevant platforms
+- [x] Test on relevant versions of Python
 - Compatibility with Python standard library as a zip archive, e.g. Autodesk Maya
 - [Git]() in place of [SVN]()
 - [six]() in place of [future]()
